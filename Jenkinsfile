@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/IshitaSwami/DemoBlaze_Playwright.git'
+                git branch: 'main', git 'https://github.com/IshitaSwami/DemoBlaze_Playwright.git'
             }
         }
 
