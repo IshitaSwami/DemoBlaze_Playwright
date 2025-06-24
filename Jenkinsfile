@@ -14,7 +14,7 @@ pipeline {
 
         stage('Set up Python & Install Dependencies') {
             steps {
-                sh '''
+                bat '''
                     python3 -m venv $VENV_DIR
                     source $VENV_DIR/bin/activate
                     pip install --upgrade pip
@@ -25,7 +25,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh '''
+                bat '''
                     source $VENV_DIR/bin/activate
                     pytest tests/ --maxfail=1 --disable-warnings --tb=short
                 '''
