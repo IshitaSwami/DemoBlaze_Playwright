@@ -8,15 +8,15 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git branch: 'main', git 'https://github.com/IshitaSwami/DemoBlaze_Playwright.git'
+                git branch: 'main', url: 'https://github.com/IshitaSwami/DemoBlaze_Playwright.git'
             }
         }
 
         stage('Set up Python & Install Dependencies') {
             steps {
-                bat '''
-                    python3 -m venv $VENV_DIR
-                    source $VENV_DIR/bin/activate
+                sh '''
+                    python -m venv $VENV_DIR
+                    source $VENV_DIR/Scripts/activate
                     pip install --upgrade pip
                     pip install -r requirements.txt
                 '''
@@ -25,8 +25,8 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                bat '''
-                    source $VENV_DIR/bin/activate
+                sh '''
+                    source $VENV_DIR/Scripts/activate
                     pytest tests/ --maxfail=1 --disable-warnings --tb=short
                 '''
             }
@@ -35,7 +35,7 @@ pipeline {
 
     post {
         always {
-            junit '**/test-results/*.xml' // If using JUnit XML output
+            junit '**/test-results/*.xml' // Optional: only if you produce JUnit-style XML reports
         }
     }
 }
